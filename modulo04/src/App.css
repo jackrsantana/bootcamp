@@ -1,5 +1,10 @@
 body {
-    background:  #7159c1;
-    color: #fff;
-    font-family: Arial, Helvetica, sans-serif
+  background: #7159c1;
+  color: #fff;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.header {
+  max-width: 1100px;
+  margin: 0 auto;
 }
