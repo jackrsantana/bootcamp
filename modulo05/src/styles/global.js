@@ -20,10 +20,11 @@ body {
 body, input, button {
   color: #222;
   font-size: 14px;
-  font-family: Arial, Helvetica, sans-serif
+  font-family: Arial, Helvetica, sans-serif;
+
 }
 
-button: {
+button {
   cursor: pointer;
 }
 
