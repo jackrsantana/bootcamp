@@ -101,3 +101,69 @@ export const IssueList = styled.ul`
     }
   }
 `;
+
+export const IssueFilter = styled.div`
+  display: flex;
+  justify-content: center;
+  margin-bottom: 30px;
+
+  button {
+    padding: 8px;
+    margin: 4px;
+    background: #fff;
+    color: #333;
+    border-radius: 16px;
+    border: 1px solid #7159c1;
+    width: 85px;
+
+    &:hover {
+      transition: 0.3s;
+      background: #7159c1a6;
+      color: #fff;
+    }
+
+    &:nth-child(${props => props.active + 1}) {
+      background: #7159c1;
+      color: white;
+    }
+  }
+`;
+
+export const PageActions = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 30px;
+
+  button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    height: 30px;
+    width: 30px;
+    font-weight: bold;
+    padding: 5px;
+    margin: 0 5px;
+    background: #fff;
+    color: #7159c1;
+    border-radius: 50%;
+    border: 1px solid #7159c1;
+
+    &:hover:enabled {
+      transition: 0.3s;
+      background: #7159c1;
+      color: #fff;
+    }
+
+    &[disabled] {
+      cursor: not-allowed;
+      opacity: 0.6;
+    }
+  }
+
+  span {
+    font-size: 14px;
+    font-weight: 600;
+  }
+`;
