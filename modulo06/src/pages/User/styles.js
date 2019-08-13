@@ -35,8 +35,17 @@ export const Bio = styled.Text`
   text-align: center;
 `;
 
+export const Body = styled.View`
+  flex: 1;
+`;
+
+export const Loading = styled.View`
+  align-items: center;
+  justify-content: center;
+`;
+
 export const Stars = styled.FlatList.attrs({
-  showVerticalScrollIndicator: false,
+  showsVerticalScrollIndicator: false,
 })`
   margin-top: 20px;
 `;
@@ -45,7 +54,7 @@ export const Starred = styled.View`
   background: #f5f5f5;
   border-radius: 4px;
   padding: 10px 15px;
-  margin-bottom: 20px;
+  margin-bottom: 5px;
   flex-direction: row;
   align-items: center;
 `;

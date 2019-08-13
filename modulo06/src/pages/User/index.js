@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { ActivityIndicator } from 'react-native';
 import PropTypes from 'prop-types';
 
 import api from '../../services/api';
@@ -11,6 +12,8 @@ import {
   Bio,
   Stars,
   Starred,
+  Body,
+  Loading,
   OwnerAvatar,
   Info,
   Title,
@@ -30,20 +33,42 @@ export default class User extends Component {
 
   state = {
     stars: [],
+    loading: false,
+    page: 1,
   };
 
   async componentDidMount() {
+    this.loadStarreds();
+  }
+
+  handleEndReached = async () => {
+    const { page } = this.state;
+
+    await this.setState({ page: page + 1 });
+
+    this.loadStarreds();
+  };
+
+  loadStarreds = async () => {
+    const { stars, page } = this.state;
     const { navigation } = this.props;
     const user = navigation.getParam('user');
 
-    const response = await api.get(`/users/${user.login}/starred`);
+    this.setState({ loading: true });
 
-    this.setState({ stars: response.data });
-  }
+    const response = await api.get(`/users/${user.login}/starred`, {
+      params: {
+        page,
+      },
+    });
+
+    this.setState({ stars: [...stars, ...response.data], loading: false });
+    // console.tron.log('state', this.state);
+  };
 
   render() {
     const { navigation } = this.props;
-    const { stars } = this.state;
+    const { stars, loading } = this.state;
 
     const user = navigation.getParam('user');
 
@@ -55,19 +80,27 @@ export default class User extends Component {
           <Bio>{user.bio}</Bio>
         </Header>
 
-        <Stars
-          data={stars}
-          keyExtractor={star => String(star.id)}
-          renderItem={({ item }) => (
-            <Starred>
-              <OwnerAvatar source={{ uri: item.owner.avatar_url }} />
-              <Info>
-                <Title>{item.name}</Title>
-                <Author>{item.owner.login}</Author>
-              </Info>
-            </Starred>
+        <Body>
+          <Stars
+            data={stars}
+            keyExtractor={star => String(star.id)}
+            onEndReached={this.handleEndReached}
+            renderItem={({ item }) => (
+              <Starred>
+                <OwnerAvatar source={{ uri: item.owner.avatar_url }} />
+                <Info>
+                  <Title>{item.name}</Title>
+                  <Author>{item.owner.login}</Author>
+                </Info>
+              </Starred>
+            )}
+          />
+          {loading && (
+            <Loading>
+              <ActivityIndicator color="#7159c1" size="large" />
+            </Loading>
           )}
-        />
+        </Body>
       </Container>
     );
   }
